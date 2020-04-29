@@ -39,6 +39,7 @@ def display(res):
 
 def calc(val):
     print(val)
+
     return 0
 
 def main():
