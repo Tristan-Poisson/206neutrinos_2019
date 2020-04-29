@@ -76,7 +76,6 @@ def loop(val):
         display(val)
 
 def calc(val):
-    print(val)
     val_dict = {
         "nm": val[0],
         "st_d": val[3],
