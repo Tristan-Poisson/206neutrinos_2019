@@ -25,21 +25,66 @@ def check_for_err():
     except ValueError:
         print("Flag error. Try -h for more informations.")
         sys.exit(84)
+    if flag[0] < 0:
+        print("Flag error. Try -h for more informations.")
+        sys.exit(84)
     for i in range(2, len(sys.argv)):
         try:
             flag.append(float(sys.argv[i]))
         except ValueError:
             print("Flag error. Try -h for more informations.")
             sys.exit(84)
+    if flag[0] < 0 or flag[1] < 0 or flag[2] <= 0 or flag[3] < 0:
+        print("Flag error. Try -h for more informations.")
+        sys.exit(84)
     return flag
 
 def display(res):
-    for i in range(201):
-        print("{} {:.5f}".format(i, res[i]))
+    print("Number of values: {}".format(res["nm"]))
+    print("\tStandard deviation:\t{:.2f}".format(res["st_d"]))
+    print("\tArithmetic mean:\t{:.2f}".format(res["ar_m"]))
+    print("\tRoot mean square:\t{:.2f}".format(res["ro_m"]))
+    print("\tHarmonic mean:\t{:.2f}".format(res["ha_m"]))
+
+def get_input():
+    try:
+        arg = input('Enter next value: ')
+    except EOFError:
+        exit(0)
+    if arg == "END":
+        exit(0)
+    try:
+        ret = float(arg)
+    except ValueError as e:
+        print("It must be a number strictly above 0")
+        return get_input()
+    if ret == 0:
+        print("It must be a number strictly above 0")
+        return get_input()
+
+    return ret
+
+def loop(val):
+    while 1 == 1:
+        arg = get_input()
+        val["nm"] += 1
+        tmp = (val["st_d"]**2 + val["ar_m"]**2) * (val["nm"] - 1)
+        val["ar_m"] = ((val["nm"] - 1) * val["ar_m"] + arg) / val["nm"]
+        val["ro_m"] = math.sqrt((tmp + arg**2) / val["nm"])
+        val["ha_m"] = val["nm"] / (1 / arg + (val["nm"] - 1) / val["ha_m"])
+        val["st_d"] = math.sqrt((tmp + arg**2) / val["nm"] - val["ar_m"]**2)
+        display(val)
 
 def calc(val):
     print(val)
-
+    val_dict = {
+        "nm": val[0],
+        "st_d": val[3],
+        "ar_m": val[1],
+        "ro_m": 0.0,
+        "ha_m": val[2]
+    }
+    loop(val_dict)
     return 0
 
 def main():
