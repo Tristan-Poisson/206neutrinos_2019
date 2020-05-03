@@ -40,11 +40,11 @@ def check_for_err():
     return flag
 
 def display(res):
-    print("Number of values: {}".format(res["nm"]))
+    print("\tNumber of values: {}".format(res["nm"]))
     print("\tStandard deviation:\t{:.2f}".format(res["st_d"]))
     print("\tArithmetic mean:\t{:.2f}".format(res["ar_m"]))
     print("\tRoot mean square:\t{:.2f}".format(res["ro_m"]))
-    print("\tHarmonic mean:\t{:.2f}".format(res["ha_m"]))
+    print("\tHarmonic mean:\t{:.2f}\n".format(res["ha_m"]))
 
 def get_input():
     try:
